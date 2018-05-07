@@ -4,54 +4,65 @@
 
 #include "Container.h"
 
-template <typename t>
-struct Node
+enum Color
 {
-	Node<t>* parent;
-	Node<t>* left;
-	Node<t>* right;
-
-	t key;
-
-	Node(t key) : 
-		key{ key }, parent { nullptr }, left{ nullptr }, right{ nullptr } {}
-
-	Node(t key, Node<t>* parent, Node<t>* left, Node<t>* right) :
-		key{ key }, parent{ parent }, left{ left }, right{ right } {}
+	RED, BLACK
 };
 
-template <typename t>
-class BST : public Container<t>
+struct Node
+{
+	Node* parent;
+	Node* left;
+	Node* right;
+
+	std::string key;
+	Color color;
+
+	Node(std::string key) :
+		key{ key }, parent{ nullptr }, left{ nullptr }, right{ nullptr }, color{ Color::BLACK } {}
+
+	Node(std::string key, Color color) :
+		key{ key }, parent{ nullptr }, left{ nullptr }, right{ nullptr }, color{ color } {}
+
+	Node(std::string key, Node* parent, Node* left, Node* right) :
+		key{ key }, parent{ parent }, left{ left }, right{ right }, color{ Color::BLACK } {}
+
+	Node(std::string key, Node* parent, Node* left, Node* right, Color color) :
+		key{ key }, parent{ parent }, left{ left }, right{ right }, color{ color } {}
+};
+
+class BST : public Container
 {
 protected:
-	Node<t>* root;
+	Node* root;
+	int node_count;
 
-	virtual void transplant(Node<t>* u, Node<t>* v);
-	virtual Node<t>* find(Node<t>* x, t key);
-	virtual Node<t>* min(Node<t>* x);
-	virtual Node<t>* max(Node<t>* x);
-	virtual Node<t>* succ(Node<t>* x);
-	virtual Node<t>* pred(Node<t>* x);
-	virtual void inorder(Node<t>* x, std::vector<t> &sorted);
-	virtual void postorder_delete(Node<t>* x);
+	void transplant(Node* u, Node* v);
+	Node* find(Node* x, std::string key);
+	Node* find(Node* x, std::string key, unsigned long &depth);
+	Node* min(Node* x);
+	Node* max(Node* x);
+	Node* succ(Node* x, bool skip_repeats);
+	Node* pred(Node* x, bool skip_repeats);
+	void inorder(Node* x, std::vector<std::string> &sorted);
+	void postorder_delete(Node* x);
+	void print(Node* x, std::stringstream* ss);
 
 public:
-	BST() : root{ nullptr } {}
+	BST() : root{ nullptr }, node_count{ 0 } {}
 	~BST();
 
-	virtual void ins(t key);
-	virtual void del(t key);
-	virtual bool find(t key);
-	virtual t min();
-	virtual t max();
-	virtual t succ(t key);
-	virtual t pred(t key);
-	virtual std::vector<t> inorder();
-
-	t null_type() { return nullptr; }
+	virtual void ins(std::string key);
+	virtual void del(std::string key);
+	bool find(std::string key);
+	unsigned long counted_find(std::string key);
+	std::string min();
+	std::string max();
+	std::string succ(std::string key, bool skip_repeats);
+	std::string pred(std::string key, bool skip_repeats);
+	std::vector<std::string> inorder();
+	std::string print();
+	virtual unsigned int size();
 
 	void operator delete(void* p);
 };
-
-std::string BST<std::string>::null_type() { return ""; }
-template class BST<std::string>;

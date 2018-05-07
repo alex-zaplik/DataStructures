@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.27428.2015
+VisualStudioVersion = 15.0.27428.2037
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DataStructures", "DataStructures.vcxproj", "{232FE5DE-E5D4-4A06-A062-7C344EAFC54A}"
 EndProject
@@ -26,6 +26,6 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {014DBA69-03A9-4276-A834-82D6CCCC3A2E}
+		SolutionGuid = {B1F4FE2B-4CA8-4685-8DEA-95A4D6E61FA6}
 	EndGlobalSection
 EndGlobal

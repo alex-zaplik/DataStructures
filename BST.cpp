@@ -1,55 +1,57 @@
 #include "BST.h"
 
 #include <vector>
+#include <sstream>
 
-template<typename t>
-bool BST<t>::find(t key)
+bool BST::find(std::string key)
 {
 	return find(root, key) != nullptr;
 }
 
-template<typename t>
-t BST<t>::min()
+unsigned long BST::counted_find(std::string key)
+{
+	unsigned long compares = 0;
+	find(root, key, compares);
+	return compares;
+}
+
+std::string BST::min()
 {
 	if (root == nullptr)
 	{
 		return null_type();
 	}
 
-	Node<t>* x = min(root);
+	Node* x = min(root);
 	return (x != nullptr) ? x->key : null_type();
 }
 
-template<typename t>
-t BST<t>::max()
+std::string BST::max()
 {
 	if (root == nullptr)
 	{
 		return null_type();
 	}
 
-	Node<t>* x = max(root);
+	Node* x = max(root);
 	return (x != nullptr) ? x->key : null_type();
 }
 
-template<typename t>
-t BST<t>::succ(t key)
+std::string BST::succ(std::string key, bool skip_repeats)
 {
-	Node<t>* x = find(root, key);
-	x = succ(x);
+	Node* x = find(root, key);
+	x = succ(x, skip_repeats);
 	return (x != nullptr) ? x->key : null_type();
 }
 
-template<typename t>
-t BST<t>::pred(t key)
+std::string BST::pred(std::string key, bool skip_repeats)
 {
-	Node<t>* x = find(root, key);
-	x = pred(x);
+	Node* x = find(root, key);
+	x = pred(x, skip_repeats);
 	return (x != nullptr) ? x->key : null_type();
 }
 
-template<typename t>
-void BST<t>::inorder(Node<t>* x, std::vector<t> &sorted)
+void BST::inorder(Node* x, std::vector<std::string> &sorted)
 {
 	if (x != nullptr)
 	{
@@ -59,8 +61,7 @@ void BST<t>::inorder(Node<t>* x, std::vector<t> &sorted)
 	}
 }
 
-template<typename t>
-void BST<t>::postorder_delete(Node<t>* x)
+void BST::postorder_delete(Node* x)
 {
 	if (x != nullptr)
 	{
@@ -70,8 +71,22 @@ void BST<t>::postorder_delete(Node<t>* x)
 	}
 }
 
-template<typename t>
-BST<t>::~BST()
+void BST::print(Node* x, std::stringstream* ss)
+{
+	if (x != nullptr)
+	{
+		*ss << "(" << x->key << " " << ((x->color == Color::BLACK) ? "B" : "R") << " ";
+		print(x->left, ss);
+		print(x->right, ss);
+		*ss << ") ";
+	}
+	else
+	{
+		*ss << "*";
+	}
+}
+
+BST::~BST()
 {
 	if (root != nullptr)
 	{
@@ -81,11 +96,10 @@ BST<t>::~BST()
 	}
 }
 
-template<typename t>
-void BST<t>::ins(t key)
+void BST::ins(std::string key)
 {
-	Node<t>* x = root;
-	Node<t>* y = nullptr;
+	Node* x = root;
+	Node* y = nullptr;
 
 	while (x != nullptr)
 	{
@@ -101,7 +115,7 @@ void BST<t>::ins(t key)
 		}
 	}
 
-	Node<t>* z = new Node<t>(key, y, nullptr, nullptr);
+	Node* z = new Node(key, y, nullptr, nullptr);
 
 	if (root == nullptr)
 	{
@@ -115,12 +129,13 @@ void BST<t>::ins(t key)
 	{
 		y->right = z;
 	}
+
+	node_count++;
 }
 
-template<typename t>
-void BST<t>::del(t key)
+void BST::del(std::string key)
 {
-	Node<t>* z = find(root, key);
+	Node* z = find(root, key);
 
 	if (z == nullptr)
 	{
@@ -137,7 +152,7 @@ void BST<t>::del(t key)
 	}
 	else
 	{
-		Node<t>* y = min(z->right);
+		Node* y = min(z->right);
 		if (y->parent != z)
 		{
 			transplant(y, y->right);
@@ -148,25 +163,36 @@ void BST<t>::del(t key)
 		y->left = z->left;
 		y->left->parent = y;
 	}
+
+	node_count--;
 }
 
-template<typename t>
-std::vector<t> BST<t>::inorder()
+std::vector<std::string> BST::inorder()
 {
-	std::vector<t> sorted;
+	std::vector<std::string> sorted;
 	inorder(root, sorted);
 	return sorted;
 }
 
-template<typename t>
-void BST<t>::operator delete(void * p)
+std::string BST::print()
 {
-	((BST<t>*)p)->postorder_delete(((BST<t>*)p)->root);
+	std::stringstream ss;
+	print(root, &ss);
+	return ss.str();
+}
+
+unsigned int BST::size()
+{
+	return node_count;
+}
+
+void BST::operator delete(void * p)
+{
+	((BST*)p)->postorder_delete(((BST*)p)->root);
 	free(p);
 }
 
-template<typename t>
-void BST<t>::transplant(Node<t>* u, Node<t>* v)
+void BST::transplant(Node* u, Node* v)
 {
 	if (u->parent == nullptr)
 	{
@@ -187,8 +213,7 @@ void BST<t>::transplant(Node<t>* u, Node<t>* v)
 	}
 }
 
-template<typename t>
-Node<t>* BST<t>::find(Node<t>* x, t key)
+Node* BST::find(Node* x, std::string key)
 {
 	while (x != nullptr && x->key != key)
 	{
@@ -205,8 +230,28 @@ Node<t>* BST<t>::find(Node<t>* x, t key)
 	return x;
 }
 
-template<typename t>
-Node<t>* BST<t>::min(Node<t>* x)
+Node* BST::find(Node* x, std::string key, unsigned long &depth)
+{
+	while (x != nullptr && x->key != key)
+	{
+		depth += 2;
+
+		if (x->key > key)
+		{
+			x = x->left;
+		}
+		else
+		{
+			x = x->right;
+		}
+	}
+
+	depth++;
+
+	return x;
+}
+
+Node* BST::min(Node* x)
 {
 	while (x->left != nullptr)
 	{
@@ -216,8 +261,7 @@ Node<t>* BST<t>::min(Node<t>* x)
 	return x;
 }
 
-template<typename t>
-Node<t>* BST<t>::max(Node<t>* x)
+Node* BST::max(Node* x)
 {
 	while (x->right != nullptr)
 	{
@@ -227,8 +271,7 @@ Node<t>* BST<t>::max(Node<t>* x)
 	return x;
 }
 
-template<typename t>
-Node<t>* BST<t>::succ(Node<t>* x)
+Node* BST::succ(Node* x, bool skip_repeats)
 {
 	if (x == nullptr)
 	{
@@ -237,10 +280,17 @@ Node<t>* BST<t>::succ(Node<t>* x)
 
 	if (x->right != nullptr)
 	{
-		return min(x->right);
+		Node* right_min = min(x->right);
+
+		if (skip_repeats && right_min != nullptr && right_min->key == x->key)
+		{
+			return succ(right_min, skip_repeats);
+		}
+
+		return right_min;
 	}
 
-	Node<t>* y = x->parent;
+	Node* y = x->parent;
 
 	while (y != nullptr && x == y->right)
 	{
@@ -248,11 +298,15 @@ Node<t>* BST<t>::succ(Node<t>* x)
 		y = y->parent;
 	}
 
+	if (skip_repeats && y != nullptr && y->key == x->key)
+	{
+		return succ(y, skip_repeats);
+	}
+
 	return y;
 }
 
-template<typename t>
-Node<t>* BST<t>::pred(Node<t>* x)
+Node* BST::pred(Node* x, bool skip_repeats)
 {
 	if (x == nullptr)
 	{
@@ -261,15 +315,27 @@ Node<t>* BST<t>::pred(Node<t>* x)
 
 	if (x->left != nullptr)
 	{
-		return max(x->left);
+		Node* left_max = max(x->left);
+
+		if (skip_repeats && left_max != nullptr && left_max->key == x->key)
+		{
+			return pred(left_max, skip_repeats);
+		}
+
+		return left_max;
 	}
 
-	Node<t>* y = x->parent;
+	Node* y = x->parent;
 
 	while (y != nullptr && x == y->left)
 	{
 		x = y;
 		y = y->parent;
+	}
+
+	if (skip_repeats && y != nullptr && y->key == x->key)
+	{
+		return pred(y, skip_repeats);
 	}
 
 	return y;

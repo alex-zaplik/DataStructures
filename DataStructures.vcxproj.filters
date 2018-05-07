@@ -24,6 +24,18 @@
     <ClCompile Include="RBT.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="HashTable.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="LinkedList.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="InputHandler.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="BloomFilter.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BST.h">
@@ -35,5 +47,46 @@
     <ClInclude Include="Container.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="HashTable.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="LinkedList.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="InputHandler.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="UnorderedContainer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="BloomFilter.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="aspell_wordlist.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="sample.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="aspell_wordlist_shuffle.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="kjb.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="test.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="aspell_wordlist_one.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="aspell_wordlist_two.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="error.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
   </ItemGroup>
 </Project>

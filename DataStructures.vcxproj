@@ -115,14 +115,33 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="BloomFilter.cpp" />
     <ClCompile Include="BST.cpp" />
+    <ClCompile Include="HashTable.cpp" />
+    <ClCompile Include="InputHandler.cpp" />
+    <ClCompile Include="LinkedList.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="RBT.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="BloomFilter.h" />
     <ClInclude Include="BST.h" />
     <ClInclude Include="Container.h" />
+    <ClInclude Include="HashTable.h" />
+    <ClInclude Include="InputHandler.h" />
+    <ClInclude Include="LinkedList.h" />
     <ClInclude Include="RBT.h" />
+    <ClInclude Include="UnorderedContainer.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="aspell_wordlist.txt" />
+    <Text Include="aspell_wordlist_one.txt" />
+    <Text Include="aspell_wordlist_shuffle.txt" />
+    <Text Include="aspell_wordlist_two.txt" />
+    <Text Include="error.txt" />
+    <Text Include="kjb.txt" />
+    <Text Include="sample.txt" />
+    <Text Include="test.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
