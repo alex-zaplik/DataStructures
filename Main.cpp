@@ -594,8 +594,6 @@ int main(int argc, char* argv[])
 	std::cin >> T;
 	std::cin.get();
 
-	unsigned int ones = 0;
-
 	std::string line;
 	for (int i = 0; i < T; ++i)
 	{
@@ -603,10 +601,7 @@ int main(int argc, char* argv[])
 		line = ih.handle_line(line);
 
 		if (line.size() != 0) std::cout << line << std::endl;
-		if (line == "1") ones++;
 	}
-
-	std::cout << ((1 - (double)ones / (T - 1)) * 100) << "%" << std::endl;
 
 	std::cerr << ih.stats() << std::endl;
 

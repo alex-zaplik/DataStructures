@@ -201,7 +201,7 @@ void RBT::delete_fixup(Node* x)
 			{
 				if (w->right->color == Color::BLACK)
 				{
-					w->right->color = Color::BLACK;
+					w->left->color = Color::BLACK;
 					w->color = Color::RED;
 					right_rotate(w);
 					w = x->parent->right;
@@ -235,7 +235,7 @@ void RBT::delete_fixup(Node* x)
 			{
 				if (w->left->color == Color::BLACK)
 				{
-					w->left->color = Color::BLACK;
+					w->right->color = Color::BLACK;
 					w->color = Color::RED;
 					left_rotate(w);
 					w = x->parent->left;
